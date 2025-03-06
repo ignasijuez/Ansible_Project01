@@ -10,7 +10,7 @@ mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER', 'db_user')
 app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD', 'Passw0rd')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB', 'employee_db')
-app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST', '18.100.42.211')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST', '51.92.218.57')
 
 mysql.init_app(app)
 
