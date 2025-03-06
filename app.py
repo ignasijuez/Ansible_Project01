@@ -27,6 +27,8 @@ def read():
     # Open a new connection for each request
     conn = mysql.connect()
     cursor = conn.cursor()
+
+    cursor.execute("USE employee_db")
     
     cursor.execute("SELECT * FROM employees")
     row = cursor.fetchone()
