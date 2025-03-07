@@ -28,6 +28,9 @@ def read():
     conn = mysql.connect()
     cursor = conn.cursor()
 
+    if conn.open:
+            print("✅ Successfully connected to the database!")
+    
     cursor.execute("USE employee_db")
     
     cursor.execute("SELECT * FROM employees")
