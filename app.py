@@ -24,28 +24,24 @@ def hello():
 
 @app.route('/read from database')
 def read():
-    
     # Open a new connection for each request
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    if conn.open:
-            print("✅ Successfully connected to the database!")
-    
     cursor.execute("USE employee_db")
-    
-    cursor.execute("SELECT * FROM employees")
+
+    cursor.execute("SELECT name FROM employees")
     row = cursor.fetchone()
     result = []
-    
+
     while row is not None:
-        result.append(row[0])  # Assuming the first column contains the data you need
+        result.append(str(row[0]))  # Convert to string before appending
         row = cursor.fetchone()
 
     cursor.close()  # Always close the cursor
     conn.close()    # Always close the connection
 
-    return ",".join(result)
+    return "<br>".join(result)
 
 
 if __name__ == "__main__":
