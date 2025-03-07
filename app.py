@@ -22,29 +22,42 @@ def main():
 def hello():
     return 'I am good, how about you?'
 
-@app.route('/read from database')
+@app.route('/read-from-database')
 def read():
-    # Open a new connection for each request
-    conn = mysql.connect()
-    cursor = conn.cursor()
+    try:
+        # Open a new connection for each request
+        conn = mysql.connect()
+        cursor = conn.cursor()
 
-    if conn.open:
+        # Check if connection is successful
+        if conn.open:
             print("✅ Successfully connected to the database!")
-    
-    cursor.execute("USE employee_db")
-    
-    cursor.execute("SELECT * FROM employees")
-    row = cursor.fetchone()
-    result = []
-    
-    while row is not None:
-        result.append(row[0])  # Assuming the first column contains the data you need
+
+        # Use the database
+        cursor.execute("USE employee_db")
+
+        # Fetch data
+        cursor.execute("SELECT * FROM employees")
         row = cursor.fetchone()
+        result = []
 
-    cursor.close()  # Always close the cursor
-    conn.close()    # Always close the connection
+        while row is not None:
+            result.append(row[0])  # Assuming the first column contains the data you need
+            row = cursor.fetchone()
 
-    return ",".join(result)
+        return ",".join(result)
+
+    except Exception as e:
+        print(f"❌ Database connection error: {e}")
+        return "Database connection failed", 500
+
+    finally:
+        # Ensure cleanup in all cases
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
